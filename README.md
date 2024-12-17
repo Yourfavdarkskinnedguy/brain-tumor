@@ -10,7 +10,7 @@ This project is a deep learning-based web application that predicts whether a pe
 - **Deep Learning**: TensorFlow/Keras for model training.
 - **Backend**: Flask API for serving predictions.
 - **Frontend**: HTML for user interface.
-- **Deployment**: Render for hosting.
+- **Deployment**: Streamlit for hosting.
 
 ## How to Use the App
 1. Clone this repository:  
