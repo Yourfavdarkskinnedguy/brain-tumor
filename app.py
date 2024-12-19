@@ -2,13 +2,14 @@ from flask import Flask, request, render_template
 import tensorflow as tf
 import numpy as np
 from io import BytesIO
+import os
 
 
 # Initialize Flask app
 app = Flask(__name__)
 
 # Load the trained model
-model = tf.keras.models.load_model("BrainTumor.h5")
+model = tf.keras.models.load_model(os.path.join(os.getcwd(),"BrainTumor.h5"))
 
 # Route for prediction
 @app.route("/", methods=["GET", "POST"])
