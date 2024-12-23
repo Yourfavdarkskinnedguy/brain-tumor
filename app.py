@@ -43,7 +43,7 @@ def predict():
             print('Something went wrong')
             return render_template("home.html", result=None)
         # return render_template("home.html", result=None)
-
+    return render_template("home.html", result=None)
 
 # Main function to run the Flask app
 if __name__ == "__main__":
