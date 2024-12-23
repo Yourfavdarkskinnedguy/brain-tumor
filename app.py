@@ -25,20 +25,20 @@ def predict():
             if file.filename == "":
                 return render_template("home.html", result="No selected file!")
             
-            img = BytesIO(file.read())
+            # img = BytesIO(file.read())
 
-            # Process the uploaded image
-            loaded_img = tf.keras.preprocessing.image.load_img(img, target_size=(128, 128))
-            img_to_array = tf.keras.preprocessing.image.img_to_array(loaded_img) / 255.0
-            img_expanded = np.expand_dims(img_to_array, axis=0)
+            # # Process the uploaded image
+            # loaded_img = tf.keras.preprocessing.image.load_img(img, target_size=(128, 128))
+            # img_to_array = tf.keras.preprocessing.image.img_to_array(loaded_img) / 255.0
+            # img_expanded = np.expand_dims(img_to_array, axis=0)
 
-            # Make prediction
-            predictions = model.predict(img_expanded)
-            print(predictions)  # For debugging purposes
-            result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
+            # # Make prediction
+            # predictions = model.predict(img_expanded)
+            # print(predictions)  # For debugging purposes
+            # result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
 
             # Return result to the webpage
-            return render_template("home.html", result=result)
+            return render_template("home.html", result='Healthy')
         except:
             print('Something went wrong')
             return render_template("home.html", result=None)
