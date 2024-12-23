@@ -40,9 +40,9 @@ def predict():
 
 
             # Process the uploaded image
-            loaded_img = tf.keras.utils.load_img(full_path, target_size=(128, 128))
-            print(loaded_img)
-            # img_to_array = tf.keras.utils.img_to_array(loaded_img) / 255.0
+            #loaded_img = tf.keras.utils.load_img(full_path, target_size=(128, 128))
+            img_to_array = tf.keras.utils.img_to_array(loaded_img) / 255.0
+            print(img_to_array)
             # img_expanded = np.expand_dims(img_to_array, axis=0)
             # print(img_expanded)
 
