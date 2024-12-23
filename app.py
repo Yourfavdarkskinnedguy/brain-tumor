@@ -25,7 +25,9 @@ def predict():
             if file.filename == "":
                 return render_template("home.html", result="No selected file!")
             
-            # img = BytesIO(file.read())
+            img = BytesIO(file.read())
+
+            print(img)
 
             # # Process the uploaded image
             # loaded_img = tf.keras.preprocessing.image.load_img(img, target_size=(128, 128))
