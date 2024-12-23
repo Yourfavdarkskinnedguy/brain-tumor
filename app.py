@@ -29,12 +29,12 @@ def predict():
                 return render_template("home.html", result="No selected file!")
             
             # img = BytesIO(file.read())
-            if not os.path.exists('tmp'):
-                os.mkdir('tmp')
+            #if not os.path.exists('tmp'):
+                #os.mkdir('tmp')
 
             img_path= file.filename
             full_path= os.path.join('tmp', img_path)
-            file.save(full_path)
+            file.save(full_path)    
             print(full_path)
 
 
