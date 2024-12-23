@@ -43,11 +43,11 @@ def predict():
             loaded_img = tf.keras.utils.load_img(full_path, target_size=(128, 128))
             img_to_array = tf.keras.utils.img_to_array(loaded_img) / 255.0
             img_expanded = np.expand_dims(img_to_array, axis=0)
-            print(img_expanded)
 
-            # # Make prediction
-            # predictions = model.predict(img_expanded)
-            # print(predictions)  # For debugging purposes
+
+            # Make prediction
+            predictions = model.predict(img_expanded)
+            print(predictions)  # For debugging purposes
             # result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
 
             os.remove(full_path)
