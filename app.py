@@ -5,11 +5,14 @@ from io import BytesIO
 import os
 
 
+
 # Initialize Flask app
 app = Flask(__name__)
 
 # Load the trained model
 model = tf.keras.models.load_model(os.path.join(os.getcwd(),"BrainTumor.h5"))
+
+print(os.path.join(os.getcwd(),"BrainTumor.h5"))
 
 # Route for prediction
 @app.route("/", methods=["GET", "POST"])
@@ -25,22 +28,30 @@ def predict():
             if file.filename == "":
                 return render_template("home.html", result="No selected file!")
             
-            img = BytesIO(file.read())
+            # img = BytesIO(file.read())
 
-            print(img)
+            img_path= file.filename
+            full_path= os.path.join('tmp', img_path)
+            file.save(full_path)
+            print(full_path)
 
-            # # Process the uploaded image
-            # loaded_img = tf.keras.preprocessing.image.load_img(img, target_size=(128, 128))
-            # img_to_array = tf.keras.preprocessing.image.img_to_array(loaded_img) / 255.0
-            # img_expanded = np.expand_dims(img_to_array, axis=0)
+
+
+            # Process the uploaded image
+            loaded_img = tf.keras.utils.load_img(full_path, target_size=(128, 128))
+            img_to_array = tf.keras.utils.img_to_array(loaded_img) / 255.0
+            img_expanded = np.expand_dims(img_to_array, axis=0)
+            # print(img_expanded)
 
             # # Make prediction
-            # predictions = model.predict(img_expanded)
-            # print(predictions)  # For debugging purposes
-            # result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
+            predictions = model.predict(img_expanded)
+            print(predictions)  # For debugging purposes
+            result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
+
+            os.remove(full_path)
 
             # Return result to the webpage
-            return render_template("home.html", result='Healthy')
+            return render_template("home.html", result=result)
         except:
             print('Something went wrong')
             return render_template("home.html", result=None)
