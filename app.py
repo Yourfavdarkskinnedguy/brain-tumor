@@ -41,8 +41,8 @@ def predict():
             return render_template("home.html", result=result)
         except:
             print('Something went wrong')
-            render_template("home.html", result=None)
-        return render_template("home.html", result=None)
+            return render_template("home.html", result=None)
+        # return render_template("home.html", result=None)
 
 
 # Main function to run the Flask app
