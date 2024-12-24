@@ -9,8 +9,13 @@ import os
 # Initialize Flask app
 app = Flask(__name__)
 
+gpus= tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
+
 # Load the trained model
 model = tf.keras.models.load_model(os.path.join(os.getcwd(),"BrainTumor.h5"))
+
 
 print(os.path.join(os.getcwd(),"BrainTumor.h5"))
 
@@ -48,12 +53,12 @@ def predict():
             # Make prediction
             predictions = model.predict(img_expanded)
             print(predictions)  # For debugging purposes
-            # result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
+            result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
 
             os.remove(full_path)
 
             # Return result to the webpage
-            return render_template("home.html", result='result')
+            return render_template("home.html", result= result)
         except:
             print('Something went wrong')
             return render_template("home.html", result=None)
