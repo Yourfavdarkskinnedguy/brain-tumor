@@ -20,12 +20,21 @@ for gpu in gpus:
 # Load the trained model
 model = tf.keras.models.load_model(os.path.join(os.getcwd(),"BrainTumor.h5"))
 
+converter= tf.lite.TFLiteConverter.from_keras_model(model)
+tflite_model= converter.convert()
+with open('converted_model.tflite', 'wb') as f:     
+  f.write(tflite_model)
+
+interpreter= tf.lite.Interpreter(os.path.join(os.getcwd(), 'converted_model.tflite'))
+interpreter.allocate_tensors()
+
+
 
 print(os.path.join(os.getcwd(),"BrainTumor.h5"))
 
 # Route for prediction
 @app.route("/", methods=["GET", "POST"])
-async def predict():
+def predict():
     if request.method == "POST":
         try:
             print('Got here:', request)
@@ -53,9 +62,20 @@ async def predict():
             img_to_array = tf.keras.utils.img_to_array(loaded_img) / 255.0
             img_expanded = np.expand_dims(img_to_array, axis=0)
 
+            
+
+            input_details= converter.get_input_details()
+            output_details= converter.get_output_details()
+
+            interpreter.get_tensors(input_details[0]['index'], img_expanded)
+
+            interpreter.invoke()
+
+
+
 
             # Make prediction
-            predictions = await asyncio.to_thread(model.predict(img_expanded, batch_size=1))
+            predictions =  interpreter.get_tensors(output_details[0]['index'])
             print(predictions)  # For debugging purposes
             result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
 
