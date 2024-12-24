@@ -3,6 +3,7 @@ import tensorflow as tf
 import numpy as np
 from io import BytesIO
 import os
+import asyncio
 
 
 
@@ -24,7 +25,7 @@ print(os.path.join(os.getcwd(),"BrainTumor.h5"))
 
 # Route for prediction
 @app.route("/", methods=["GET", "POST"])
-def predict():
+async def predict():
     if request.method == "POST":
         try:
             print('Got here:', request)
@@ -54,7 +55,7 @@ def predict():
 
 
             # Make prediction
-            predictions = model.predict(img_expanded)
+            predictions = await asyncio.to_thread(model.predict(img_expanded, batch_size=1))
             print(predictions)  # For debugging purposes
             result = "Healthy" if predictions[0][0] > 0.5 else "Tumor"
 
