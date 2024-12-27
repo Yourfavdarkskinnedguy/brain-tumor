@@ -10,10 +10,14 @@ This project is a deep learning-based web application that predicts whether a pe
 - **Deep Learning**: TensorFlow/Keras for model training.
 - **Backend**: Flask API for serving predictions.
 - **Frontend**: HTML for user interface.
-- **Deployment**: Streamlit for hosting.
+- **Deployment**: render for hosting.
 
 ## How to Use the App
 1. Clone this repository:  
    ```bash
    https://github.com/Yourfavdarkskinnedguy/brain-tumor
    cd brain-tumor-detection
+
+## link to the webapp
+[brain-tumor] (https://brain-tumor-d4ls.onrender.com/)
+
