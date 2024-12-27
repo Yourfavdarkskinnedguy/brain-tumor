@@ -43,28 +43,22 @@ def predict():
             file.save(full_path)    
             print(full_path)
 
-            print('got here now')
-
 
 
             # Process the uploaded image
             loaded_img = tf.keras.utils.load_img(full_path, target_size=(128, 128))
             img_to_array = tf.keras.utils.img_to_array(loaded_img) / 255.0
             img_expanded = np.expand_dims(img_to_array, axis=0)
-            print(type(img_expanded))
 
-            print('got here too')
 
             input_details= interpreter.get_input_details()
             output_details= interpreter.get_output_details()
 
-            print('got here 3')
-            
+
             interpreter.set_tensor(input_details[0]['index'], img_expanded)
 
             interpreter.invoke()
 
-            print('got here 4')
             # Make prediction
             predictions = interpreter.get_tensor(output_details[0]['index'])
             print(predictions)  # For debugging purposes
@@ -72,7 +66,6 @@ def predict():
             print('got here 5')
 
             os.remove(full_path)
-            print('got here 6')
 
             # Return result to the webpage
             return render_template("home.html", result= result)
